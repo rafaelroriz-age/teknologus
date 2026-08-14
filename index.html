@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEKNOLOGUS — Consultoria em Gestão de Manutenção, Projetos e Sistemas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite:#201E1B;
+    --graphite-2:#2B2823;
+    --steel:#8B8579;
+    --iron:#A34632;
+    --iron-dim:#7A3626;
+    --amber:#E3A83B;
+    --paper:#F2EEE6;
+    --line:#3A362F;
+    --line-light:#DCD5C6;
+    --maxw:1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--graphite);
+    color:var(--paper);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    font-size:0.72rem;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+
+  /* Gantt-bar signature divider */
+  .gantt{
+    display:flex;
+    width:100%;
+    height:6px;
+    overflow:hidden;
+  }
+  .gantt span{display:block;height:100%;}
+  .gantt .s1{width:22%;background:var(--iron);}
+  .gantt .s2{width:14%;background:var(--graphite-2);}
+  .gantt .s3{width:31%;background:var(--amber);}
+  .gantt .s4{width:9%;background:var(--graphite-2);}
+  .gantt .s5{width:24%;background:var(--iron-dim);}
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:10;
+    background:rgba(32,30,27,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:0.02em;}
+  .logo span{color:var(--iron);}
+  nav ul{display:flex;gap:28px;list-style:none;}
+  nav ul li a{font-size:0.85rem;color:var(--steel);transition:color .2s;}
+  nav ul li a:hover{color:var(--paper);}
+  .nav-cta{
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.04em;text-transform:uppercase;
+    background:var(--amber);color:var(--graphite);padding:9px 16px;border-radius:2px;font-weight:500;
+  }
+  .nav-mobile-hide{display:flex;align-items:center;gap:28px;}
+  @media(max-width:720px){ .nav-mobile-hide ul{display:none;} }
+
+  /* Hero */
+  .hero{padding:88px 0 0;}
+  .eyebrow{color:var(--iron);margin-bottom:22px;display:flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--iron);display:inline-block;}
+  h1.headline{font-size:clamp(2.1rem,5.5vw,3.6rem);max-width:14ch;line-height:1.08;}
+  h1.headline em{font-style:normal;color:var(--iron);}
+  .sub{margin-top:26px;max-width:52ch;color:var(--steel);font-size:1.05rem;}
+  .hero-ctas{margin-top:38px;display:flex;gap:16px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--amber);color:var(--graphite);padding:13px 26px;border-radius:2px;
+    font-weight:600;font-size:0.92rem;display:inline-block;transition:transform .15s;
+  }
+  .btn-primary:hover{transform:translateY(-1px);}
+  .btn-ghost{
+    border:1px solid var(--line-light);color:var(--paper);padding:13px 26px;border-radius:2px;
+    font-size:0.92rem;opacity:0.85;
+  }
+  .hero-foot{margin-top:64px;}
+
+  /* Sections generic */
+  section{padding:76px 0;}
+  .section-head{margin-bottom:48px;}
+  .section-head .mono{color:var(--iron);margin-bottom:12px;display:block;}
+  .section-head h2{font-size:clamp(1.5rem,3.4vw,2.1rem);}
+
+  /* About */
+  #sobre{background:var(--graphite-2);}
+  .about-grid{display:grid;grid-template-columns:0.85fr 1.4fr;gap:56px;align-items:start;}
+  @media(max-width:800px){.about-grid{grid-template-columns:1fr;}}
+  .founder-photo{
+    width:100%;aspect-ratio:1;border-radius:2px;overflow:hidden;position:relative;
+    background:var(--iron-dim);
+  }
+  .founder-photo img{
+    width:100%;height:100%;object-fit:cover;object-position:center 12%;
+    display:block;filter:grayscale(10%) contrast(1.05);
+  }
+  .founder-photo::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    box-shadow:inset 0 0 0 1px rgba(227,168,59,0.28);
+  }
+  .about-name{font-size:1.3rem;margin-bottom:4px;}
+  .about-role{color:var(--iron);font-size:0.95rem;margin-bottom:20px;}
+  .about-text p{color:var(--steel);margin-bottom:14px;max-width:62ch;}
+  .credentials{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;}
+  .credentials span{
+    font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.03em;
+    border:1px solid var(--line-light);opacity:0.7;padding:6px 12px;border-radius:2px;
+  }
+
+  /* Services / process */
+  .process{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+  @media(max-width:900px){.process{grid-template-columns:1fr;}}
+  .step{border-top:1px solid var(--line);padding:28px 24px 28px 0;position:relative;}
+  .process > .step + .step{border-left:1px solid var(--line);padding-left:24px;}
+  @media(max-width:900px){.process > .step + .step{border-left:none;border-top:1px solid var(--line);padding-left:0;}}
+  .step .num{color:var(--iron);display:block;margin-bottom:16px;}
+  .step h3{font-size:1.05rem;margin-bottom:10px;}
+  .step p{color:var(--steel);font-size:0.92rem;}
+
+  /* Areas of expertise */
+  .areas-note{color:var(--steel);max-width:56ch;margin:-24px 0 36px;font-size:0.95rem;}
+  .areas{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  @media(max-width:800px){.areas{grid-template-columns:1fr;}}
+  .area-item{border-left:2px solid var(--iron);border-bottom:1px solid var(--line);padding:26px 30px;}
+  .areas .area-item:nth-child(odd){border-right:1px solid var(--line);}
+  .areas .area-item:nth-last-child(-n+2){border-bottom:none;}
+  @media(max-width:800px){
+    .areas .area-item:nth-child(odd){border-right:none;}
+    .areas .area-item:nth-last-child(-n+2){border-bottom:1px solid var(--line);}
+    .areas .area-item:last-child{border-bottom:none;}
+  }
+  .area-item .mono{color:var(--amber);display:block;margin-bottom:10px;}
+  .area-item h3{font-size:1.02rem;margin-bottom:8px;}
+  .area-item p{color:var(--steel);font-size:0.9rem;}
+  .areas-cta{margin-top:34px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .areas-cta p{color:var(--steel);font-size:0.88rem;max-width:38ch;}
+
+  /* Partnerships */
+  #parcerias{background:var(--graphite-2);}
+  .partners{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .partners-single{grid-template-columns:minmax(0,520px);justify-content:start;}
+  @media(max-width:720px){.partners{grid-template-columns:1fr;}}
+  .partner-card{border:1px solid var(--line);padding:30px;border-radius:2px;}
+  .partner-logo{width:112px;background:var(--paper);border-radius:4px;padding:10px 12px;margin-bottom:22px;}
+  .partner-logo img{width:100%;display:block;}
+  .partner-card .mono{color:var(--amber);display:block;margin-bottom:14px;}
+  .partner-card h3{font-size:1.15rem;margin-bottom:12px;}
+  .partner-card p{color:var(--steel);font-size:0.92rem;}
+  .partner-meta{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);}
+  .partner-meta .mono{color:var(--iron);margin-bottom:6px;}
+  .partner-tags{color:var(--steel);font-size:0.85rem;}
+  .partner-link{display:inline-block;margin-top:20px;font-size:0.85rem;color:var(--amber);border-bottom:1px solid transparent;}
+  .partner-link:hover{border-color:var(--amber);}
+
+  /* Tech strip */
+  .stack{
+    display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;
+    padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .stack span{font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--steel);letter-spacing:0.02em;}
+
+  /* Contact */
+  footer{padding:80px 0 40px;}
+  .contact-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;}
+  @media(max-width:800px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-grid h2{font-size:clamp(1.6rem,3.6vw,2.3rem);max-width:16ch;line-height:1.15;margin-bottom:24px;}
+  .contact-grid p{color:var(--steel);max-width:46ch;margin-bottom:30px;}
+  .contact-info div{margin-bottom:20px;}
+  .contact-info .mono{color:var(--iron);display:block;margin-bottom:6px;}
+  .contact-info a, .contact-info span.val{font-size:0.98rem;}
+  .foot-bottom{
+    margin-top:70px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  }
+  .foot-bottom span{color:var(--steel);font-size:0.78rem;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">TEKNOLOGUS<span>.</span></div>
+    <div class="nav-mobile-hide">
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#areas">Áreas de Atuação</a></li>
+        <li><a href="#parcerias">Parcerias</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+      <a class="nav-cta" href="#contato">Solicitar proposta</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow mono">PCM · Gestão de Projetos · Gestão de Sistemas</span>
+    <h1 class="headline">Manutenção não é imprevisto. <em>É plano executado.</em></h1>
+    <p class="sub">A TEKNOLOGUS estrutura o planejamento e controle de manutenção, a gestão de projetos e a integridade operacional de empresas industriais e de mineração — com rigor de engenharia e disciplina de auditoria ISO.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#contato">Solicitar proposta</a>
+      <a class="btn-ghost" href="#servicos">Ver metodologia</a>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <div class="gantt"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="wrap about-grid">
+    <div class="founder-photo"><img src="nelson-santos.jpg" alt="Nelson de Araújo dos Santos, fundador e diretor da TEKNOLOGUS"></div>
+    <div>
+      <div class="mono" style="color:var(--iron);margin-bottom:14px;display:block;">Quem conduz</div>
+      <h2 class="about-name">Nelson de Araújo dos Santos</h2>
+      <div class="about-role">Fundador &amp; Diretor — Senior Planning Engineer, especialista em PCM</div>
+      <div class="about-text">
+        <p>Mais de 25 anos de atuação em energia, mineração, manutenção industrial, siderurgia e serviço militar. Cerca de 16 anos como Gerente de Pesquisa, Desenvolvimento e Inovação Tecnológica na FURNAS Centrais Elétricas.</p>
+        <p>Atua hoje na Mina Sossego (Vale) como Consultor de Integridade Estrutural, integrando a equipe de planejamento dos serviços, paradas de manutenção e grandes paradas voltados à integridade estrutural de ativos críticos.</p>
+      </div>
+      <div class="credentials">
+        <span>ISO 9001 Lead Auditor</span>
+        <span>ISO 14001 Lead Auditor</span>
+        <span>ISO 45001 Lead Auditor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="mono">Metodologia</span>
+      <h2>Do diagnóstico ao controle — o ciclo do PCM</h2>
+    </div>
+    <div class="process">
+      <div class="step">
+        <span class="num mono">01</span>
+        <h3>Diagnóstico</h3>
+        <p>Levantamento do estado atual de manutenção, processos e maturidade de gestão operacional.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">02</span>
+        <h3>Planejamento</h3>
+        <p>Cronogramas, PCM e integridade estrutural estruturados em SAP PM/MM, MS Project e Primavera P6.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">03</span>
+        <h3>Execução assistida</h3>
+        <p>Acompanhamento de projetos e operações junto às equipes técnicas e de campo.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">04</span>
+        <h3>Controle &amp; melhoria</h3>
+        <p>Indicadores em Power BI e auditoria contínua sob normas ISO 9001, 14001 e 45001.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="areas">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="mono">Experiência aplicada</span>
+      <h2>Áreas de atuação</h2>
+    </div>
+    <p class="areas-note">Projetos executados em operações industriais e de mineração de grande porte. Por confidencialidade contratual, clientes e detalhes específicos não são divulgados publicamente.</p>
+    <div class="areas">
+      <div class="area-item">
+        <span class="mono">Manutenção</span>
+        <h3>Grandes Paradas</h3>
+        <p>Planejamento de grandes paradas de manutenção em operações de mineração e siderurgia.</p>
+      </div>
+      <div class="area-item">
+        <span class="mono">Ativos críticos</span>
+        <h3>Integridade Estrutural</h3>
+        <p>Programas de integridade estrutural para equipamentos e ativos críticos em operação contínua.</p>
+      </div>
+      <div class="area-item">
+        <span class="mono">PCM</span>
+        <h3>Planejamento e Controle de Manutenção</h3>
+        <p>Estruturação de rotinas, indicadores e governança de PCM em plantas industriais.</p>
+      </div>
+      <div class="area-item">
+        <span class="mono">Projetos</span>
+        <h3>Gestão de Projetos</h3>
+        <p>Estruturação e acompanhamento de projetos industriais, do planejamento à entrega.</p>
+      </div>
+      <div class="area-item">
+        <span class="mono">Conformidade</span>
+        <h3>Sistemas de Gestão</h3>
+        <p>Auditoria e implementação de sistemas de gestão sob as normas ISO 9001, 14001 e 45001.</p>
+      </div>
+      <div class="area-item">
+        <span class="mono">Cronogramas</span>
+        <h3>Modelagem de Cronogramas Complexos</h3>
+        <p>Estruturação e otimização de cronogramas em SAP PM/MM, MS Project e Primavera P6.</p>
+      </div>
+    </div>
+    <div class="areas-cta">
+      <a class="btn-primary" href="#contato">Solicitar portfólio completo</a>
+      <p>Portfólio detalhado de projetos disponível mediante solicitação, com respeito aos acordos de confidencialidade em vigor.</p>
+    </div>
+  </div>
+</section>
+
+<section id="parcerias">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="mono">Rede operacional</span>
+      <h2>Parcerias que ampliam a entrega</h2>
+    </div>
+    <div class="partners partners-single">
+      <div class="partner-card">
+        <div class="partner-logo"><img src="gestaosmart-logo.png" alt="Logo Grupo Gestão Smart"></div>
+        <span class="mono">Núcleo Carajás</span>
+        <h3>Gestão Smart</h3>
+        <p>TEKNOLOGUS opera como célula regional no Pará — representante, co-executora e difusora da metodologia Gestão Smart junto a empresas locais.</p>
+        <div class="partner-meta">
+          <span class="mono">Especialidades</span>
+          <p class="partner-tags">ISO 9001 · ISO 14001 · ISO 45001 · LGPD</p>
+        </div>
+        <a class="partner-link" href="https://www.gestaosmart.com.br" target="_blank" rel="noopener">www.gestaosmart.com.br ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="stack">
+    <span>SAP PM/MM</span>
+    <span>MS Project</span>
+    <span>Primavera P6</span>
+    <span>Power BI</span>
+    <span>AutoCAD / BIM</span>
+  </div>
+</div>
+
+<footer id="contato">
+  <div class="wrap contact-grid">
+    <div>
+      <h2>Vamos estruturar o plano de manutenção da sua operação.</h2>
+      <p>Atendimento a empresas industriais e de mineração em Parauapebas e região de Carajás, com atuação nacional em projetos de PCM e gestão de sistemas.</p>
+      <a class="btn-primary" href="mailto:contato@teknologus.com.br">contato@teknologus.com.br</a>
+    </div>
+    <div class="contact-info">
+      <div>
+        <span class="mono">Localização</span>
+        <span class="val">Parauapebas, Pará — Brasil</span>
+      </div>
+      <div>
+        <span class="mono">CNPJ</span>
+        <span class="val">66.185.368/0001-80</span>
+      </div>
+      <div>
+        <span class="mono">E-mail</span>
+        <a href="mailto:contato@teknologus.com.br">contato@teknologus.com.br</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 TEKNOLOGUS. Todos os direitos reservados.</span>
+    <span>teknologus.com.br</span>
+  </div>
+</footer>
+
+</body>
+</html>
